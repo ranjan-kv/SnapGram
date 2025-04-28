@@ -1,4 +1,5 @@
-import { Models } from "appwrite";
+// Remove unused import
+// import { Models } from "appwrite";
 
 // Define the post type to match your application's post structure
 type MockPost = {

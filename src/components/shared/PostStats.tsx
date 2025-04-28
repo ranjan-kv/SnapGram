@@ -17,19 +17,20 @@ type PostStatsProps = {
 
 const PostStats = ({ post, userId }: PostStatsProps) => {
   const location = useLocation();
-  const likesList = post.likes.map((user: Models.Document) => user.$id);
+  // Add null check for post.likes
+  const likesList = post.likes?.map((user: Models.Document) => user.$id) || [];
 
   const [likes, setLikes] = useState<string[]>(likesList);
   const [isSaved, setIsSaved] = useState(false);
-
   const { mutate: likePost } = useLikePost();
   const { mutate: savePost } = useSavePost();
   const { mutate: deleteSavePost } = useDeleteSavedPost();
 
   const { data: currentUser } = useGetCurrentUser();
 
-  const savedPostRecord = currentUser?.save.find(
-    (record: Models.Document) => record.post.$id === post.$id
+  // Add null checks to prevent the error
+  const savedPostRecord = currentUser?.save?.find(
+    (record: Models.Document) => record.post?.$id === post?.$id
   );
 
   useEffect(() => {
